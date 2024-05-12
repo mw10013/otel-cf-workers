@@ -16,6 +16,15 @@ const handleDO = async (request: Request, env: Env): Promise<Response> => {
 
 const handleRest = async (request: Request, env: Env, ctx: ExecutionContext): Promise<Response> => {
 	trace.getActiveSpan()?.setAttribute('http.route', '/*')
+	console.log('handleRest: active span: %o', trace.getActiveSpan())
+
+	const tracer = trace.getTracer('my_own_tracer_name')
+	tracer.startActiveSpan('name', (span) => {
+		span.setAttribute('foo', 'bar')
+		console.log('handleRest: start active span: %o', span)
+		span.end()
+	})
+
 	await fetch('https://cloudflare.com')
 
 	const cache = await caches.open('stuff')
