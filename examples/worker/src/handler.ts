@@ -3,7 +3,7 @@ import { trace } from '@opentelemetry/api'
 export interface Env {
 	OTEL_TEST: KVNamespace
 	Test_Otel_DO: DurableObjectNamespace
-	'otel.exporter.headers.x-honeycomb-team': string
+	BASELIME_API_KEY: string
 }
 
 const handleDO = async (request: Request, env: Env): Promise<Response> => {
